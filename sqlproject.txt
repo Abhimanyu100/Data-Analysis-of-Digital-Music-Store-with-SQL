@@ -1,0 +1,37 @@
+
+/*1 What is the total number of Tracks in each playlist?*/
+Select p.Name as Play_List_name,
+count(plt.playlistId) as Track_count_Total
+from PlaylistTrack as plt
+join Playlist as p
+on plt.Playlistid = p.playlistid
+group by p.name;
+
+/*2 Which sales agent sales the most in the year 2010?*/
+select employee.firstName, sum(Invoice.total) as Total 
+from Invoice
+join customer on customer.customerid =  Invoice.customerid
+join employee on Employee.employeeid = customer.supportrepid
+where Invoice.invoiceDate like '2010%'
+group by Employee.Employeeid
+order by Total desc;
+
+/*3 What is the Maximum number of Track sold by Genre?
+SELECT genre.Name Genre, COUNT(genre.Name) Total_Tracks
+FROM InvoiceLine
+JOIN Track
+ON InvoiceLine.TrackId = Track.TrackId
+JOIN Genre
+ON Track.GenreId = genre.GenreId
+GROUP BY Genre
+ORDER BY Total_tracks;
+
+/*4 What is the top 10 title song with minimum duration (milliseconds)?*/
+SELECT Album.Title, min(Track.Milliseconds) milliseconds
+FROM Album
+JOIN Track
+ON Album.AlbumId = Track.AlbumId
+GROUP BY Album.Title
+ORDER BY milliseconds
+lIMIT 10;
+
